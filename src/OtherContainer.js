@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from './store';
-const MainContainer = observer(() => {
+const OtherContainer = observer(() => {
     const store = useStore();
     async function findCatText(){
             const resp = await fetch('https://cat-fact.herokuapp.com/facts')
@@ -11,11 +11,10 @@ const MainContainer = observer(() => {
     return (
         <>
 
-        <button onClick={() => findCatText()}>Text</button>
-        
+         {store.doesTisdaleHaveAValue && <h1>The value is: {store.tisdalesVariable}</h1>}
         
         
         </>
     );
 });
-export default MainContainer;
+export default OtherContainer;
