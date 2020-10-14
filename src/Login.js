@@ -14,12 +14,26 @@ const Login = observer (() => {
         store.loginPassword = event.target.value
     }
 
+    const attemptLogin = async() => {
+        store.isAuthenticating = true
+        const response = await api.userLogin({username: store.loginUsername, password: store.loginPassword});
+        store.isAuthenticating = false
 
+        if(response.status === 200){
+            const json = await response.json()
+            localStorage.setItem('authToken', json.token)
+            store.isLoggedIn = true
+            store.currentPage = "UserContainer"
+        }
+
+    }
+
+    
     return (
         <div>
             <label>
                 Username:
-                <input type="text" name="name" value={store.loginUsername} onChange={handleUsernameEntry}/>
+                <input id='usernameLogin' type="text" name="name" value={store.loginUsername} onChange={handleUsernameEntry}/>
             </label>
             <br></br>
             
@@ -28,7 +42,9 @@ const Login = observer (() => {
                 <input type="text" name="name" value={store.loginPassword} onChange={handlePasswordEntry}/>
             </label>
             <br></br>
-
+                <button id='userLoginButton' disabled={store.isAuthenticating} onClick={attemptLogin} >
+                    Login
+                </button>
         </div>
     )
 })

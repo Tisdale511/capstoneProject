@@ -1,5 +1,7 @@
 const API_ROOT = 'http://localhost:3000'
     
+const apiKey = process.env.REACT_APP_API_KEY
+
 const postUserInfo = async (user) => {
     console.log(user);
     const config = {
@@ -14,47 +16,76 @@ const postUserInfo = async (user) => {
 }
 
 
-const createLoginToken = async (token) => {
-    console.log(token)
+const createLoginToken = async ({username, password}) => {
     const config = {
         method: 'POST',
+        headers: requestHeaders(false),
+        body: JSON.stringify({username, password})
+    }
+    // console.log(config)
+    return await fetch(`${API_ROOT}/login`, config)
+}
+
+const requestHeaders = (authToken = true) => {
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    if (authToken) headers.Authorization = localStorage.getItem("authToken");
+    return headers;
+  }
+
+const findServantByAddress = async(address, apiKey) => {
+    const config = {
         headers: {
             'content-type': 'application/json',
             'accept': 'application/json'
         },
-        body: JSON.stringify(token)
+        body: JSON.stringify({address, apiKey})
     }
-    return await fetch(`${API_ROOT}/token`, config)
-}
+    return fetch(`https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=${address}&includeOffices=true&levels=country&roles=legislatorLowerBody&roles=legislatorUpperBody&key=${apiKey}`, config)
+}  
+
+const findCommitteeContributions = async() => {
+    const config = {
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        },
+
+    }
+    return await fetch(`${API_ROOT}/api/v1/parsed_contribution_info`, config)
+} 
+
+const findPacInfo = async() => {
+    const config = {
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        },
+
+    }
+    return await fetch(`${API_ROOT}/api/v1/parsed_pac_info`, config)
+} 
+
+const findCandidateInfo = async() => {
+    const config = {
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        },
+
+    }
+    return await fetch(`${API_ROOT}/api/v1/parsed_candidate_info`, config)
+} 
 
 export default {
     userLogin: createLoginToken,
-    createUser: postUserInfo
+    createUser: postUserInfo,
+    findServantByAddress: findServantByAddress,
+    apiKey: apiKey,
+    committeeContributions: findCommitteeContributions,
+    pacInfo: findPacInfo,
+    candidateInfo: findCandidateInfo
 }
-// import React from 'react';
-// import { observer } from 'mobx-react';
-// import { useStore } from './store';
-
-
-// const store = useStore();
-
-//     const API_ROOT = 'https://localhost:3000'
-
-//     const postUserInfo = (user) => {
-//         const config = {
-//             method: 'POST',
-//             headers: {
-//                 'content-type': 'application/json',
-//                 'accept: application/json'
-//             },
-//             body: JSON.stringify({user: user})
-//         }
-//         return fetch(`${API_ROOT}/users`, config)
-//     }
-
-
-// export default {
-//     API_ROOT: API_ROOT,
-//     createUser: postUserInfo()
-// }
 

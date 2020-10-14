@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { action, observable, computed } from 'mobx';
+import { action, observable, computed, reaction, flow } from 'mobx';
 
 export default class Store {
     @observable isLoggedIn = false;
@@ -9,8 +9,18 @@ export default class Store {
     @observable signupPassword = ''
     @observable isAuthenticating = false;
     @observable isFetching = false;
+    
     @observable loginUsername = ''
     @observable loginPassword = ''
+    @observable address = '2844 golden gate ave san francisco ca'
+    
+    @observable districtState = null
+    @observable districtNumber = null
+    @observable currentPoliticians = [];
+
+    @computed get hasPoliticiansLoaded() {
+        return !!this.currentPoliticians.length
+    } 
 
     // @computed get isLoggedIn() {         Other ways of doing things          What computed values are for
     //     return !!this.username;
@@ -31,6 +41,50 @@ export default class Store {
             store.currentPage = newPage;
         }
     }
+
+    nameDoesntMatter = reaction(
+        () => [this.districtState, this.districtNumber], ([state, number]) => {
+            if (!state || !number) return;
+
+            //lets set OTHER store things, values (from fetch'es from our backend? [yes]) and MobX will continue reacting to that
+            // ideally we now poll our own back-end and retrieve the names of candidates that match the state and district number
+            //    and then we store that somewhere, like.....   validPoliticians, myPoliticians...localPoliticians....currentPoliticians....
+            //        const response = await fetch('https://localhost:3000/candidateNameSearch', body: JSON.stringify({state: state, district: number}))
+            //        const json = await response.json();         
+            //        store.currentPoliticians = response.dickheadPeople;
+
+
+            alert(`It seems your state is ${state} and the district number is ${number}`);
+        }
+    );
+
+    // @action checkAddress = async() {
+    //     const addressReply = await api.checkAddress(store.addressInput);
+    // }        DOESNT WORK!    MOBX doesn't do AWAIT/ASYNC in store @actions     must use style below
+
+    // checkAddress = flow(function* () {
+    //     const store = this;
+
+    //     store.checkingAddress = true;
+    //     const addressReply = yield api.checkAddress(store.addressInput);
+    //     store.checkingAddress = false;
+
+    //     if (addressReply.ok) {
+    //         store.state = addressReply.state;
+    //         store.district = addressReply.cd;
+    //         store.normalizedAddress = addressReply.normalizedAddress;
+    //         store.addressRegion = addressReply.addressRegion;
+    //         window.history.pushState({}, null, `/district/${store.state}/${store.district}`)
+    //         store.sendEvent('Address Resolved', `${store.addressInput} : ${store.addressRegion}`);
+    //         yield store.getVoterInfo();
+    //         store.fetchS3Data();
+    //         store.menuToastOpen = true;
+    //     } else {
+    //         store.sendEvent('Address Failed', store.addressInput);
+    //         store.addressError = true;
+    //     }
+
+    // }).bind(this);
 
 }
 const StoreContext = createContext();

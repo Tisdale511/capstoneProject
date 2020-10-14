@@ -29,7 +29,7 @@ const SignUp = observer(() => {
     }
 
     const attemptSignup = async () => {
-        if (checkPasswordValidity) {
+        if (!checkPasswordValidity) {
             alert('Your password sux.');
             return;
         }
@@ -42,7 +42,7 @@ const SignUp = observer(() => {
             const user = await response.json()  //await avoids .then, waits until fetch is finished
             store.isLoggedIn = true        // add signup success message
             store.username = user.username 
-            store.currentPage = 'UserContainer';       // isLoggedIn true
+            store.currentPage = 'HomePage';       // isLoggedIn true
         }else{
             window.alert('Username already taken')  // signup failed
         }
@@ -54,7 +54,7 @@ const SignUp = observer(() => {
             Create a new account
                 <label>
                     Username:
-                    <input type="text" name="name" value={store.signupUsername} onChange={handleChangeUsername}/>
+                    <input type="text" name="name" value={store.signupUsername} onChange={handleChangeUsername} />
                 </label>
                 <br></br>
 
