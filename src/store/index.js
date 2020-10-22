@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { action, observable, computed, reaction, flow } from 'mobx';
+import api from '../services/api';
 
 export default class Store {
     @observable isLoggedIn = false;
@@ -45,16 +46,17 @@ export default class Store {
     nameDoesntMatter = reaction(
         () => [this.districtState, this.districtNumber], ([state, number]) => {
             if (!state || !number) return;
+                // alert(`It seems your state is ${state} and the district number is ${number}`)  
+               this.currentPoliticians = api.candidateName(state, number)
+            //    this.currentPoliticians.map
 
             //lets set OTHER store things, values (from fetch'es from our backend? [yes]) and MobX will continue reacting to that
             // ideally we now poll our own back-end and retrieve the names of candidates that match the state and district number
             //    and then we store that somewhere, like.....   validPoliticians, myPoliticians...localPoliticians....currentPoliticians....
-            //        const response = await fetch('https://localhost:3000/candidateNameSearch', body: JSON.stringify({state: state, district: number}))
-            //        const json = await response.json();         
-            //        store.currentPoliticians = response.dickheadPeople;
+                // const response = await fetch(api.candidateInfo), body: JSON.stringify({state: state, district: number})
+                // const json = await response.json();         
+                // store.currentPoliticians = response.candidate_name;
 
-
-            alert(`It seems your state is ${state} and the district number is ${number}`);
         }
     );
 

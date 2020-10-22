@@ -26,6 +26,16 @@ const createLoginToken = async ({username, password}) => {
     return await fetch(`${API_ROOT}/login`, config)
 }
 
+// const createLoginToken = async ({username, password}) => {
+//     const config = {
+//         method: 'POST',
+//         headers: requestHeaders(false),
+//         body: JSON.stringify({username, password})
+//     }
+//     // console.log(config)
+//     return await fetch(`${API_ROOT}/login`, config)
+// }
+
 const requestHeaders = (authToken = true) => {
     const headers = {
       "Content-Type": "application/json",
@@ -68,6 +78,21 @@ const findPacInfo = async() => {
     return await fetch(`${API_ROOT}/api/v1/parsed_pac_info`, config)
 } 
 
+const findCandidateNameFromStateAndDistrict = (state, number) => {
+    const data = {
+         state: state, 
+         district: number
+     }
+     fetch(`${API_ROOT}/api/v1/candidate_search_district_number_and_state`,{
+        method: 'POST', 
+        headers: requestHeaders(true),
+        
+        body: JSON.stringify(data)
+     })
+     .then(res => res.json())
+     .then(json => console.log(json))
+} 
+
 const findCandidateInfo = async() => {
     const config = {
         headers: {
@@ -76,7 +101,7 @@ const findCandidateInfo = async() => {
         },
 
     }
-    return await fetch(`${API_ROOT}/api/v1/parsed_candidate_info`, config)
+    return await fetch(`${API_ROOT}/candidate_search_district_number_and_state`, config)
 } 
 
 export default {
@@ -86,6 +111,7 @@ export default {
     apiKey: apiKey,
     committeeContributions: findCommitteeContributions,
     pacInfo: findPacInfo,
-    candidateInfo: findCandidateInfo
+    candidateInfo: findCandidateInfo,
+    candidateName: findCandidateNameFromStateAndDistrict
 }
 
