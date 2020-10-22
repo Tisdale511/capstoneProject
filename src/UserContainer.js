@@ -15,9 +15,12 @@ const UserContainer = observer(() => {
         let result = {ok: false};
     
         let response = await fetch(`https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=${search}&levels=country&roles=legislatorLowerBody&roles=legislatorUpperBody&key=${key}`)
-    
+        
+        console.log(response)
+
         if (response.ok) {
             let json = await response.json();
+            // debugger
             const {line1, city, state, zip} = json.normalizedInput;
             result.normalizedAddress = `${line1}  ${city}, ${state} ${zip}`
     
@@ -46,7 +49,7 @@ const UserContainer = observer(() => {
         } else {
             console.error('Malformed Address. Please try again.');
         }
-        console.timeEnd('address');
+        // console.timeEnd('address');
 
         if(result.cd && result.cd.length === 1){
             result.cd = '0' + result.cd
@@ -56,13 +59,15 @@ const UserContainer = observer(() => {
 
     const checkAddressInput = async () => {
         const result = await queryAddress();
-
+        // debugger
         if (result.ok) {
+            console.log(result)
             //address search successful!
             //we will want to show user options based on the state/district combo we ascertained 
             // we have      result.state      and result.cd     which we will put SOMEWHERE in the store and then REACTION to that changing
             store.districtState = result.state;
             store.districtNumber = result.cd;
+
         } else {
             //address search NOT successful, what else do we want to do?
             //we will want to give an error message back to the user (by setting Store variables / values) so the user knows to try again
@@ -81,9 +86,9 @@ const UserContainer = observer(() => {
 
             <button onClick={checkAddressInput}>Find Politician by Address</button>
 
-            {/* {store.hasPoliticiansLoaded &&
-                <PoliticianTableThingComponent />
-            } */}
+            {store.hasPoliticiansLoaded &&
+                <UserContainer />
+            }
 
         </>
     )
