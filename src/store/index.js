@@ -31,10 +31,12 @@ export default class Store {
     //     this.username = null;
     // }
 
-    // @action logout() {                                     this is one of the ways I'll log out AS THINGS ARE NOW
-    //     //do other things related to logging out
-    //     this.isLoggedIn = false;
-    // }
+    @action logout() {                                    // this is one of the ways I'll log out AS THINGS ARE NOW
+        // localStorage.setItem('authToken', json.token)
+    this.isLoggedIn = false;
+    localStorage.clear()
+    this.currentPage = "MainContainer"
+    }
 
     @action setPage(newPage) {
         const store = this;
