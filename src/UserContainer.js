@@ -2,6 +2,8 @@ import React from 'react'
 import { useStore } from './store'
 import { observer } from 'mobx-react'
 import api from './services/api.js'
+import { Container, Row, Col,  Button } from 'reactstrap';
+import CandidateCard from './CandidateCard'
 
 
 const UserContainer = observer(() => {
@@ -79,16 +81,35 @@ const UserContainer = observer(() => {
         store.address = event.target.value
     }
     
+
     return (
         <>
-            UserContainer
-            <input type="text" name="name" value={store.address} onChange={handleAddressEntry}/>
-
-            <button onClick={checkAddressInput}>Find Politician by Address</button>
-
-            {store.hasPoliticiansLoaded && store.currentPoliticians.map(p => p.candidate_name)
-            
-            }
+             {/* */}
+            <div style={{
+                    width: '50%',
+                    margin: 'auto',
+                    border: '3px blue',
+                    padding: '10px'
+                }}>  {/* adds a 5% margin on all sides of bage */}
+                <input type="text" style={{width: '100%'}} name="name" value={store.address} onChange={handleAddressEntry}/>
+                <Button onClick={checkAddressInput} color="primary" style={{
+                    marginLeft: '25%',
+                    marginTop: '3%',
+                    border: '3px light blue',
+                    padding: '10px'
+                }}>
+                    Find Politician by Address
+                </Button>{' '}
+            </div>
+            <Container>
+                <Row>
+                    {store.hasPoliticiansLoaded && store.currentPoliticians.map(p =>
+                        <Col xs="9" md="4" lg="3"> 
+                            <CandidateCard candidate={p} />
+                        </Col>)  
+                    }
+                </Row>
+            </Container>
 
         </>
     )

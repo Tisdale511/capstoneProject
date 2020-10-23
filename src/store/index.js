@@ -47,8 +47,10 @@ export default class Store {
         () => [this.districtState, this.districtNumber], ([state, number]) => {
             if (!state || !number) return;
                 // alert(`It seems your state is ${state} and the district number is ${number}`)  
-               this.currentPoliticians = api.candidateName(state, number)
-               console.log(this.currentPoliticians)
+               api.candidateName(state, number)
+                .then(res=>res.json())
+                .then(json=>this.currentPoliticians = json)
+                .then(()=>console.log(this.currentPoliticians));
                })
             //lets set OTHER store things, values (from fetch'es from our backend? [yes]) and MobX will continue reacting to that
             // ideally we now poll our own back-end and retrieve the names of candidates that match the state and district number

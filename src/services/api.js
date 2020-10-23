@@ -89,11 +89,6 @@ const findCandidateNameFromStateAndDistrict = (state, number) => {
         
         body: JSON.stringify(data)
      })
-     .then(res => res.json())
-     .then(json => json.map(json => {
-         console.log(json.candidate_name)
-        return json.candidate_name
-     }))
 } 
 // componentDidMount() {
 //     this.findCandidateNameFromStateAndDistrict(state, number)

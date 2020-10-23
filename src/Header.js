@@ -19,7 +19,7 @@ const Header = observer(() => {
                 <>
                     {/* <button onClick={() => store.currentPage = 'Login'}>Login</button>
                     <button onClick={() => store.currentPage = 'Signup'}>Signup</button> */}
-                    <button onClick={() => store.logout()}>Logout</button>
+                    {/* <button onClick={() => store.logout()}>Logout</button> */}
                 </>}
         </>
     );
