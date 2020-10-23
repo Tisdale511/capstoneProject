@@ -86,9 +86,9 @@ const UserContainer = observer(() => {
 
             <button onClick={checkAddressInput}>Find Politician by Address</button>
 
-            {/* {store.hasPoliticiansLoaded &&
-                <UserContainer />
-            } */}
+            {store.hasPoliticiansLoaded && store.currentPoliticians.map(p => p.candidate_name)
+            
+            }
 
         </>
     )

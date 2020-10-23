@@ -48,17 +48,16 @@ export default class Store {
             if (!state || !number) return;
                 // alert(`It seems your state is ${state} and the district number is ${number}`)  
                this.currentPoliticians = api.candidateName(state, number)
-            //    this.currentPoliticians.map
-
+               console.log(this.currentPoliticians)
+               })
             //lets set OTHER store things, values (from fetch'es from our backend? [yes]) and MobX will continue reacting to that
             // ideally we now poll our own back-end and retrieve the names of candidates that match the state and district number
             //    and then we store that somewhere, like.....   validPoliticians, myPoliticians...localPoliticians....currentPoliticians....
                 // const response = await fetch(api.candidateInfo), body: JSON.stringify({state: state, district: number})
                 // const json = await response.json();         
                 // store.currentPoliticians = response.candidate_name;
-
-        }
-    );
+        
+    ;
 
     // @action checkAddress = async() {
     //     const addressReply = await api.checkAddress(store.addressInput);

@@ -83,15 +83,21 @@ const findCandidateNameFromStateAndDistrict = (state, number) => {
          state: state, 
          district: number
      }
-     fetch(`${API_ROOT}/api/v1/candidate_search_district_number_and_state`,{
+     return fetch(`${API_ROOT}/api/v1/candidate_search_district_number_and_state`,{
         method: 'POST', 
         headers: requestHeaders(true),
         
         body: JSON.stringify(data)
      })
      .then(res => res.json())
-     .then(json => console.log(json))
+     .then(json => json.map(json => {
+         console.log(json.candidate_name)
+        return json.candidate_name
+     }))
 } 
+// componentDidMount() {
+//     this.findCandidateNameFromStateAndDistrict(state, number)
+// }
 
 const findCandidateInfo = async() => {
     const config = {

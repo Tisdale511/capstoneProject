@@ -8,7 +8,7 @@ const Candidate = () => {
         const store = useStore();
     return (
         <div>
-            
+
             
             
         </div>
