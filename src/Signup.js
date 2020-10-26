@@ -20,17 +20,18 @@ const SignUp = observer(() => {
 
     const checkPasswordValidity = () => {
         if (store.passwordConfirm !== store.signupPassword){
-         return false;
+            return false;
         }else{
             return true;
-        // if (store.passwordConfirm.length < 8) return false;
-        // if (store.signupUsername.length < 3) return false;
+            // if (store.passwordConfirm.length < 8) return false;
+            // if (store.signupUsername.length < 3) return false;
         }
     }
-
+    
     const attemptSignup = async () => {
-        if (!checkPasswordValidity) {
-            alert('Your password sux.');
+        // debugger
+        if (!checkPasswordValidity()) {
+            alert('Your passwords do not match, please try again');
             return;
         }
 
@@ -42,7 +43,7 @@ const SignUp = observer(() => {
             const user = await response.json()  //await avoids .then, waits until fetch is finished
             store.isLoggedIn = true        // add signup success message
             store.username = user.username 
-            store.currentPage = 'HomePage';       // isLoggedIn true
+            store.currentPage = 'Login';       // isLoggedIn true
         }else{
             window.alert('Username already taken')  // signup failed
         }

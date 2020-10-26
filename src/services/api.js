@@ -3,6 +3,7 @@ const API_ROOT = 'http://localhost:3000'
 const apiKey = process.env.REACT_APP_API_KEY
 
 const postUserInfo = async (user) => {
+
     console.log(user);
     const config = {
         method: 'POST',
@@ -13,17 +14,30 @@ const postUserInfo = async (user) => {
         body: JSON.stringify(user)
     }
     return await fetch(`${API_ROOT}/api/v1/users`, config)
-}
+}                                 
 
 
 const createLoginToken = async ({username, password}) => {
     const config = {
         method: 'POST',
-        headers: requestHeaders(false),
+        headers: requestHeaders(true),
         body: JSON.stringify({username, password})
     }
+
     // console.log(config)
+    // debugger
     return await fetch(`${API_ROOT}/login`, config)
+}
+
+const validateToken = async () => {
+    const config = {
+        method: 'POST',
+        headers: requestHeaders(true)
+}
+
+const response = await fetch(`${API_ROOT}/autoLogin`, config)
+const json = await response.json()
+return json
 }
 
 // const createLoginToken = async ({username, password}) => {
@@ -40,7 +54,8 @@ const requestHeaders = (authToken = true) => {
     const headers = {
       "Content-Type": "application/json",
       Accept: "application/json",
-    };
+    };                    
+    // debugger
     if (authToken) headers.Authorization = localStorage.getItem("authToken");
     return headers;
   }
@@ -113,6 +128,8 @@ export default {
     committeeContributions: findCommitteeContributions,
     pacInfo: findPacInfo,
     candidateInfo: findCandidateInfo,
-    candidateName: findCandidateNameFromStateAndDistrict
+    candidateName: findCandidateNameFromStateAndDistrict,
+    requestHeaders: requestHeaders,
+    validateToken: validateToken
 }
 

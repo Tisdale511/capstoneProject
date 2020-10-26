@@ -8,6 +8,7 @@ export default class Store {
     @observable currentPage = 'HomePage'  // HomePage, Login, Signup, UserContainer
     @observable signupUsername = ''
     @observable signupPassword = ''
+    @observable passwordConfirm = ''
     @observable isAuthenticating = false;
     @observable isFetching = false;
     
@@ -61,7 +62,7 @@ export default class Store {
                 // const json = await response.json();         
                 // store.currentPoliticians = response.candidate_name;
         
-    ;
+    
 
     // @action checkAddress = async() {
     //     const addressReply = await api.checkAddress(store.addressInput);

@@ -14,11 +14,10 @@ const Login = observer (() => {
         store.loginPassword = event.target.value
     }
 
-    const attemptLogin = async() => {
+    const attemptLogin = async () => {
         store.isAuthenticating = true
         const response = await api.userLogin({username: store.loginUsername, password: store.loginPassword});
         store.isAuthenticating = false
-
         if(response.status === 200){
             const json = await response.json()
             localStorage.setItem('authToken', json.token)

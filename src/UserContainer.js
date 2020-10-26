@@ -10,7 +10,7 @@ const UserContainer = observer(() => {
     const store = useStore();
 
     const queryAddress = async () => {
-        console.time('address')
+        // console.time('address')
         const search = store.address;
         const key = api.apiKey;
 
@@ -94,7 +94,7 @@ const UserContainer = observer(() => {
                 <input type="text" style={{width: '100%'}} name="name" value={store.address} onChange={handleAddressEntry}/>
                 <Button onClick={checkAddressInput} color="primary" style={{
                     marginLeft: '25%',
-                    marginTop: '3%',
+                    marginop: '3%',
                     border: '3px light blue',
                     padding: '10px'
                 }}>
