@@ -5,24 +5,41 @@ import api from '../services/api';
 export default class Store {
     @observable isLoggedIn = false;
     @observable username = null;
-    @observable currentPage = 'HomePage'  // HomePage, Login, Signup, UserContainer
+
+    @observable currentPage = 'HomePage'  // HomePage, Login, Signup, UserContainer, TrackedCandidates
+
     @observable signupUsername = ''
     @observable signupPassword = ''
     @observable passwordConfirm = ''
+
     @observable isAuthenticating = false;
     @observable isFetching = false;
     
     @observable loginUsername = ''
     @observable loginPassword = ''
-    @observable address = '2844 golden gate ave san francisco ca'
+    @observable address = '23701 valencia Santa Clarita ca'
     
     @observable districtState = null
     @observable districtNumber = null
     @observable currentPoliticians = [];
+    @observable topContributors = []
+    @observable hasNoContributors = false
+
+    @observable trackedPoliticians = [];
+    
+    @computed get hasTrackedPoliticians() {
+        return !!this.trackedPoliticians.length
+    }
+
+
 
     @computed get hasPoliticiansLoaded() {
         return !!this.currentPoliticians.length
     } 
+
+    @computed get hasTopContributorsLoaded() {
+        return !!this.topContributors.length
+    }
 
     // @computed get isLoggedIn() {         Other ways of doing things          What computed values are for
     //     return !!this.username;
@@ -32,11 +49,27 @@ export default class Store {
     //     this.username = null;
     // }
 
+    @action showContributors(candidate_id) {
+        this.hasNoContributors = false
+        this.topContributors = []
+        console.log(candidate_id)
+        this.currentPage = 'ContributorView'
+        api.top10Contributors(candidate_id)
+        .then(res => res.json())
+        .then(json => {
+            this.topContributors = json
+            this.hasNoContributors = !json.length
+        })
+        // .then(json => console.log(json))
+    }
+
     @action logout() {                                    // this is one of the ways I'll log out AS THINGS ARE NOW
         // localStorage.setItem('authToken', json.token)
     this.isLoggedIn = false;
     localStorage.clear()
-    this.currentPage = "MainContainer"
+    this.trackedPoliticians = []
+    this.currentPoliticians = []
+    this.currentPage = "HomePage"
     }
 
     @action setPage(newPage) {

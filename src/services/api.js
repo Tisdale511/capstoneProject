@@ -120,6 +120,37 @@ const findCandidateInfo = async() => {
     return await fetch(`${API_ROOT}/candidate_search_district_number_and_state`, config)
 } 
 
+const findTop10Contributors = async (candidate_id) => {
+    const config = {
+        method: 'POST', 
+        headers: requestHeaders(true),
+        body: JSON.stringify({candidate_id: candidate_id})
+    }
+    return await fetch(`${API_ROOT}/api/v1/top10Contributors`, config)
+
+}
+
+const addFavorite = async (id) => {
+    const config = {
+        method: 'POST', 
+        headers: requestHeaders(true),
+        body: JSON.stringify({id: id })
+        
+    }
+    return await fetch(`${API_ROOT}/api/v1/tracked_politicians`, config)
+
+}
+
+const removeFavorite = async (id) => {
+    const config = {
+        method: 'DELETE', 
+        headers: requestHeaders(true),
+        
+    }
+    return await fetch(`${API_ROOT}/api/v1/tracked_politicians/${id}`, config)
+
+}
+
 export default {
     userLogin: createLoginToken,
     createUser: postUserInfo,
@@ -130,6 +161,9 @@ export default {
     candidateInfo: findCandidateInfo,
     candidateName: findCandidateNameFromStateAndDistrict,
     requestHeaders: requestHeaders,
-    validateToken: validateToken
+    validateToken: validateToken,
+    top10Contributors: findTop10Contributors,
+    addFavorite: addFavorite,
+    removeFavorite: removeFavorite,
 }
 

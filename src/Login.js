@@ -2,6 +2,7 @@ import React from 'react'
 import { useStore } from './store'
 import { observer } from 'mobx-react'
 import api from './services/api.js'
+import { Button } from 'reactstrap';
 
 const Login = observer (() => {
     const store = useStore();
@@ -21,6 +22,7 @@ const Login = observer (() => {
         if(response.status === 200){
             const json = await response.json()
             localStorage.setItem('authToken', json.token)
+            store.trackedPoliticians = json.tracked
             store.isLoggedIn = true
             store.currentPage = "UserContainer"
         }
@@ -41,9 +43,9 @@ const Login = observer (() => {
                 <input type="text" name="name" value={store.loginPassword} onChange={handlePasswordEntry}/>
             </label>
             <br></br>
-                <button id='userLoginButton' disabled={store.isAuthenticating} onClick={attemptLogin} >
+                <Button id='userLoginButton' color="primary" disabled={store.isAuthenticating} onClick={attemptLogin} >
                     Login
-                </button>
+                </Button>
         </div>
     )
 })

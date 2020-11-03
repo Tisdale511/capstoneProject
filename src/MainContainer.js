@@ -3,8 +3,10 @@ import Signup from './Signup'
 import Login from './Login'
 import UserContainer from './UserContainer'
 import HomePage from './HomePage.js'
+import ContributorView from './ContributorView'
 import { observer } from 'mobx-react';
 import { useStore } from './store';
+import TrackedCandidates from './TrackedCandidates'
 import api from './services/api.js'
 
 const MainContainer = observer(() => {
@@ -18,8 +20,8 @@ const MainContainer = observer(() => {
         }
       
         const findToken = await api.validateToken()
-        console.log(findToken)
-      
+        store.trackedPoliticians = findToken.tracked || [];
+
         if(findToken.error){
           console.log('auto login failed')
         }else{
@@ -36,6 +38,9 @@ const MainContainer = observer(() => {
                 { store.currentPage === 'Login' && <Login/> }
                 { store.currentPage === 'Signup' && <Signup/> }
                 { store.currentPage === 'UserContainer' && <UserContainer/> }
+                { store.currentPage === 'ContributorView' && <ContributorView/> }
+                { store.currentPage === 'TrackedCandidates' && <TrackedCandidates/>}
+
             </>
         );
     });

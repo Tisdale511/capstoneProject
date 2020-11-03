@@ -1,9 +1,11 @@
 import React from 'react'
 import { useStore } from './store'
 import { observer } from 'mobx-react'
-import api from './services/api.js'
 import { Container, Row, Col,  Button } from 'reactstrap';
+import api from './services/api.js'
 import CandidateCard from './CandidateCard'
+
+
 
 
 const UserContainer = observer(() => {
@@ -90,7 +92,7 @@ const UserContainer = observer(() => {
                     margin: 'auto',
                     border: '3px blue',
                     padding: '10px'
-                }}>  {/* adds a 5% margin on all sides of bage */}
+                }}>  {/* adds a 5% margin on all sides of page */}
                 <input type="text" style={{width: '100%'}} name="name" value={store.address} onChange={handleAddressEntry}/>
                 <Button onClick={checkAddressInput} color="primary" style={{
                     marginLeft: '25%',
