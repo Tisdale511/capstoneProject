@@ -69,6 +69,8 @@ export default class Store {
     localStorage.clear()
     this.trackedPoliticians = []
     this.currentPoliticians = []
+    this.districtNumber = null
+    this.districtState = null
     this.currentPage = "HomePage"
     }
 

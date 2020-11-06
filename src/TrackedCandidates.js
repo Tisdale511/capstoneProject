@@ -8,7 +8,6 @@ const TrackedCandidates = observer( () => {
     const store = useStore()
     return (
         <div>
-            Tracked Candidates
             <Container>
                 <Row>
                     {store.hasTrackedPoliticians && store.trackedPoliticians.map(p =>

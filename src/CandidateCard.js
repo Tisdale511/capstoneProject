@@ -61,7 +61,7 @@ const CandidateCard = observer (({candidate})  => {
                 </CardText>
                 {/* <Button>Button</Button> */}
                 <Button onClick={handleFavoritesClick}>{ isFavorited ? 'Watching' : 'Unwatched'}</Button>
-                <Button onClick={
+                <Button color="success"onClick={
                 () => {
                     has_contributors ? store.showContributors(candidate_id) : alert('This candidate has no contributors')}
                 }>$$$</Button>
